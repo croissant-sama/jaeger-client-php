@@ -178,9 +178,11 @@ class SpanToJaegerMapper
             return [0, 0];
         }
 
-        if (strlen($id) > 16) {
+        $len = strlen($id);
+
+        if ($len > 16) {
             $traceIdLow = CodecUtility::hexToInt64(substr($id, -16, 16));
-            $traceIdHigh = CodecUtility::hexToInt64(substr($id, 0, 16));
+            $traceIdHigh = CodecUtility::hexToInt64(substr($id, 0, $len - 16));
         } else {
             $traceIdLow = (int) CodecUtility::hexToInt64($id);
             $traceIdHigh = 0;
